@@ -1,4 +1,4 @@
-const Card = () => {
+const Card: React.FC = () => {
   return (
     <div className="w-[300px] rounded-md shadow-xl m-2">
       <div className="w-full h-[300px] rounded-t-md bg-gray-400"></div>
