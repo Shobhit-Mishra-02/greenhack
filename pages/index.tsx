@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Card from "../components/Card";
 
 const Home: NextPage = () => {
   return (
@@ -11,7 +12,12 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="pt-4">
-        <div className="text-2xl text-center">hello world</div>
+        <div className="flex justify-center align-middle items-center flex-wrap mt-8">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
       </main>
     </div>
   );
