@@ -1,4 +1,5 @@
 import { FiMenu, FiX } from "react-icons/fi";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useState } from "react";
 
 const Navbar: React.FC = () => {
@@ -30,9 +31,22 @@ const Navbar: React.FC = () => {
 
       {/* navbar for big devices */}
       <div className="hidden sm:block">
-        <h2>Logo.</h2>
+        <div className="flex justify-between align-middle items-center px-4 py-4 bg-blue-500 md:px-6 lg:px-12">
+          <h2 className="text-2xl font-semibold lg:text-3xl cursor-pointer hover:text-gray-700">
+            Logo.
+          </h2>
 
-        <div></div>
+          <div className="flex justify-center align-middle items-center space-x-6 md:space-x-6">
+            <AiOutlineShoppingCart className="w-8 h-8 hover:text-gray-700 cursor-pointer" />
+
+            <button className="text-xl text-white bg-orange-500 rounded-md px-4 py-1 hover:bg-orange-600">
+              Orders
+            </button>
+            <button className="text-xl text-white bg-orange-500 rounded-md px-4 py-1 hover:bg-orange-600">
+              Login
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
