@@ -29,10 +29,10 @@ const ProductViewPage = () => {
             </span>
           </div>
 
-          <button className="text-xl text-blue-500 border border-blue-500 rounded-md px-4 py-1 hover:bg-blue-500 hover:text-white mr-4">
+          <button className="text-xl text-green-500 border border-green-500 rounded-md px-4 py-1 hover:bg-green-500 hover:text-white mr-4">
             Add to cart
           </button>
-          <button className="text-xl text-white bg-blue-500 rounded-md px-6 py-1 hover:bg-blue-600 mt-2">
+          <button className="text-xl text-white bg-green-500 rounded-md px-6 py-1 hover:bg-green-600 mt-2">
             Buy now
           </button>
         </div>

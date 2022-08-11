@@ -14,7 +14,7 @@ const AdminPage = () => {
 
         <div className="pb-6 sm:pb-12 flex justify-center">
           <button
-            className="py-1 text-xl text-white bg-blue-500 rounded-md px-4 hover:bg-blue-600 md:px-6 md:py-2"
+            className="py-1 text-xl text-white bg-green-500 rounded-md px-4 hover:bg-green-600 md:px-6 md:py-2"
             onClick={() => setOpenStatus(true)}
           >
             Add product

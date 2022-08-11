@@ -17,7 +17,7 @@ const Cart: NextPage<{
               onClick={() => setCartStatus(false)}
             />
           </div>
-          <h2 className="text-3xl md:text-4xl text-center">Cart</h2>
+          <h2 className="text-3xl md:text-4xl text-center pb-8">Cart</h2>
 
           <div className="w-[300px] md:w-[400px] pt-12 divide-y-2 overflow-auto h-[500px]">
             {/* card  */}

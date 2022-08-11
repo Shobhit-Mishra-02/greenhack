@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Card: React.FC<{ adminCard: boolean }> = ({ adminCard = false }) => {
   return (
     <div className="w-[300px] rounded-md shadow-xl m-2">
@@ -13,15 +15,17 @@ const Card: React.FC<{ adminCard: boolean }> = ({ adminCard = false }) => {
             <button className="text-xl text-red-500 rounded-md px-4 py-1 hover:text-white hover:bg-red-500 border border-red-500">
               Remove
             </button>
-            <button className="text-xl text-white bg-blue-500 rounded-md px-4 py-1 hover:bg-blue-600">
+            <button className="text-xl text-white bg-green-500 rounded-md px-4 py-1 hover:bg-green-600">
               Buy now
             </button>
           </div>
         ) : (
           <div className="flex justify-end">
-            <button className="text-xl text-white bg-blue-500 rounded-md px-4 py-1 hover:bg-blue-600">
-              Buy now
-            </button>
+            <Link href={"/prodview/1"}>
+              <a className="text-xl text-white bg-green-500 rounded-md px-4 py-1 hover:bg-green-600">
+                Buy now
+              </a>
+            </Link>
           </div>
         )}
       </div>

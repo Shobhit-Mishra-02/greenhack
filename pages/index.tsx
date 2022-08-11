@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Card from "../components/Card";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -12,6 +13,13 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="pt-4">
+        <div className="flex justify-center items-center">
+          <Link href={"/leaderboard"}>
+            <a className="text-xl text-green-500 underline hover:text-green-600">
+              Checkout leaderboard
+            </a>
+          </Link>
+        </div>
         <div className="flex justify-center align-middle items-center flex-wrap mt-8">
           <Card adminCard={false} />
           <Card adminCard={false} />

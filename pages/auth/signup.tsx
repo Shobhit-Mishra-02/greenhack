@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Link from "next/link";
 
 const SignUpPage: NextPage = () => {
   return (
@@ -41,13 +42,17 @@ const SignUpPage: NextPage = () => {
               />
             </div>
             <div className="pt-8">
-              <button className="py-1 text-xl text-white bg-blue-500 rounded-md w-full hover:bg-blue-600">
+              <button className="py-1 text-xl text-white bg-green-500 rounded-md w-full hover:bg-green-600">
                 Sign up
               </button>
             </div>
-            <h2 className="text-blue-500 underline text-center pt-2 cursor-pointer ">
-              already have an account
-            </h2>
+            <div className="flex justify-center align-middle items-center">
+              <Link href={"/auth/signin"}>
+                <a className="text-green-500 underline text-center pt-2 cursor-pointer ">
+                  already have an account
+                </a>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
