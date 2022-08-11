@@ -8,6 +8,7 @@ const ProdForm: NextPage<{
 }> = ({ setOpenStatus }) => {
   return (
     <div className="fixed top-0 bottom-0 w-full z-10">
+      <div className="w-full h-full bg-gray-500 opacity-30 absolute -z-10"></div>
       <div className="flex justify-center align-middle items-center h-screen">
         <div className="w-fit bg-white rounded-md shadow-lg border">
           <div className="flex justify-end pt-4 pb-6 px-4">
@@ -16,7 +17,7 @@ const ProdForm: NextPage<{
               onClick={() => setOpenStatus(false)}
             />
           </div>
-          <h2 className="text-3xl text-center">Product form</h2>
+          <h2 className="text-3xl md:text-4xl text-center">Product form</h2>
 
           <div className="space-y-3 px-2 pb-4 pt-8">
             <div className="flex flex-col">
@@ -25,7 +26,7 @@ const ProdForm: NextPage<{
                 type="text"
                 name="name"
                 id="name"
-                className="w-[300px] px-2 py-1 rounded-md border border-gray-400"
+                className="w-[300px] md:w-[400px] px-2 py-1 rounded-md border border-gray-400"
               />
             </div>
             <div className="flex flex-col">
@@ -34,12 +35,12 @@ const ProdForm: NextPage<{
                 type="text"
                 name="price"
                 id="price"
-                className="w-[300px] px-2 py-1 rounded-md border border-gray-400"
+                className="w-[300px] md:w-[400px] px-2 py-1 rounded-md border border-gray-400"
               />
             </div>
             <div className="flex flex-col">
               <label htmlFor="image">Add image</label>
-              <div className="relative w-[300px] h-[60px] rounded-md border-dashed border-2 border-gray-500">
+              <div className="relative w-[300px] md:w-[400px] h-[60px] rounded-md border-dashed border-2 border-gray-500">
                 <div className="absolute top-0 bottom-0 w-full flex justify-center align-middle items-center">
                   <BsCardImage className="w-6 h-6 text-gray-400" />
                 </div>
@@ -59,7 +60,7 @@ const ProdForm: NextPage<{
                 id="desc"
                 cols={30}
                 rows={5}
-                className="w-[300px] px-2 py-1 rounded-md border border-gray-400"
+                className="w-[300px] md:w-[400px] px-2 py-1 rounded-md border border-gray-400"
               ></textarea>
             </div>
             <div className="pt-6">

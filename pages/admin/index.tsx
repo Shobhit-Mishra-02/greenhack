@@ -33,9 +33,9 @@ const AdminPage = () => {
         </div>
 
         <div className="flex justify-center align-middle items-center flex-wrap md:px-6">
-          <Card />
-          <Card />
-          <Card />
+          <Card adminCard={true} />
+          <Card adminCard={true} />
+          <Card adminCard={true} />
         </div>
       </div>
     </div>

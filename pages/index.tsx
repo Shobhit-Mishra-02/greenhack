@@ -13,10 +13,9 @@ const Home: NextPage = () => {
 
       <main className="pt-4">
         <div className="flex justify-center align-middle items-center flex-wrap mt-8">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <Card adminCard={false} />
+          <Card adminCard={false} />
+          <Card adminCard={false} />
         </div>
       </main>
     </div>
