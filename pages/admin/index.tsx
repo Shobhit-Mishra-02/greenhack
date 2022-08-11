@@ -1,7 +1,10 @@
 import Card from "../../components/Card";
 import ProdForm from "../../components/ProdForm";
+import { useState } from "react";
 
 const AdminPage = () => {
+  const [isFormOpen, setOpenStatus] = useState<boolean>(false);
+
   return (
     <div className="divide-y divide-gray-400 px-1 sm:px-4">
       <div>
@@ -10,10 +13,13 @@ const AdminPage = () => {
         </h3>
 
         <div className="pb-6 sm:pb-12 flex justify-center">
-          <button className="py-1 text-xl text-white bg-blue-500 rounded-md px-4 hover:bg-blue-600 md:px-6 md:py-2">
+          <button
+            className="py-1 text-xl text-white bg-blue-500 rounded-md px-4 hover:bg-blue-600 md:px-6 md:py-2"
+            onClick={() => setOpenStatus(true)}
+          >
             Add product
           </button>
-          <ProdForm />
+          {isFormOpen && <ProdForm setOpenStatus={setOpenStatus} />}
         </div>
       </div>
 
