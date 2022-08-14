@@ -1,15 +1,23 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { FiMenu, FiX } from "react-icons/fi";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useState } from "react";
 import Cart from "./Cart";
 import Order from "./Order";
 import Link from "next/link";
+import { auth } from "../firebase/lib";
+import { onAuthStateChanged } from "firebase/auth";
+import useAuth from "./hooks/authHook";
+import { useEffect } from "react";
 
 const Navbar: React.FC = () => {
   const [isOpen, setOpenStatus] = useState<boolean>(false);
   const [isCart, setCartStatus] = useState<boolean>(false);
   const [isOrder, setOrderStatus] = useState<boolean>(false);
+  // const [isUser, setUser] = useState(false)
+  const { isUser, userInfo, logout } = useAuth();
 
+  // if user is not logged in
   return (
     <>
       {/* navbar for small device */}
@@ -39,14 +47,23 @@ const Navbar: React.FC = () => {
           <li className="px-1" onClick={() => setCartStatus(true)}>
             Cart
           </li>
-          <li className="px-1" onClick={() => setOrderStatus(true)}>
-            Order
-          </li>
-          <div>
-            <Link href={"/auth/signin"}>
-              <a className="px-1 ">Login</a>
-            </Link>
-          </div>
+          {isUser && (
+            <li className="px-1" onClick={() => setOrderStatus(true)}>
+              Order
+            </li>
+          )}
+
+          {isUser ? (
+            <li onClick={logout} className="px-1 ">
+              Log out
+            </li>
+          ) : (
+            <div>
+              <Link href={"/auth/signin"}>
+                <a className="px-1 ">Log in</a>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
@@ -65,17 +82,29 @@ const Navbar: React.FC = () => {
               onClick={() => setCartStatus(true)}
             />
 
-            <button
-              className="text-xl text-white bg-green-700 rounded-md px-4 py-1 hover:bg-green-600"
-              onClick={() => setOrderStatus(true)}
-            >
-              Orders
-            </button>
-            <Link href={"/auth/signin"}>
-              <a className="text-xl text-white bg-green-700 rounded-md px-4 py-1 hover:bg-green-600">
-                Login
-              </a>
-            </Link>
+            {isUser && (
+              <button
+                className="text-xl text-white bg-green-700 rounded-md px-4 py-1 hover:bg-green-600"
+                onClick={() => setOrderStatus(true)}
+              >
+                Orders
+              </button>
+            )}
+
+            {isUser ? (
+              <button
+                onClick={logout}
+                className="text-xl text-white bg-green-700 rounded-md px-4 py-1 hover:bg-green-600"
+              >
+                Log out
+              </button>
+            ) : (
+              <Link href={"/auth/signin"}>
+                <a className="text-xl text-white bg-green-700 rounded-md px-4 py-1 hover:bg-green-600">
+                  Log in
+                </a>
+              </Link>
+            )}
           </div>
         </div>
       </div>
