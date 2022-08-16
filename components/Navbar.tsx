@@ -1,23 +1,18 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { FiMenu, FiX } from "react-icons/fi";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useState } from "react";
-import Cart from "./Cart";
-import Order from "./Order";
 import Link from "next/link";
-import { auth } from "../firebase/lib";
-import { onAuthStateChanged } from "firebase/auth";
+import { useState } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FiMenu, FiX } from "react-icons/fi";
+import Cart from "./Cart";
 import useAuth from "./hooks/authHook";
-import { useEffect } from "react";
+import Order from "./Order";
 
 const Navbar: React.FC = () => {
   const [isOpen, setOpenStatus] = useState<boolean>(false);
   const [isCart, setCartStatus] = useState<boolean>(false);
   const [isOrder, setOrderStatus] = useState<boolean>(false);
-  // const [isUser, setUser] = useState(false)
   const { isUser, userInfo, logout } = useAuth();
 
-  // if user is not logged in
   return (
     <>
       {/* navbar for small device */}
