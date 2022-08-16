@@ -1,22 +1,41 @@
+/* eslint-disable @next/next/no-img-element */
+import { GetServerSideProps } from "next";
+import { ParsedUrlQuery } from "querystring";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { db } from "../../firebase/lib";
+import { getDoc, doc } from "firebase/firestore";
 
-const ProductViewPage = () => {
+interface prodInterface {
+  productName: string;
+  productPrice: number;
+  productDesc: string;
+  productImageUrl: string;
+}
+
+const ProductViewPage = ({
+  id,
+  product,
+}: {
+  id: string;
+  product: prodInterface;
+}) => {
+  console.log(id);
   return (
     <div className="px-1 pt-6 sm:pt-12 md:pt-16 lg:pt-24 pb-3 flex flex-wrap justify-center sm:justify-evenly items-center">
-      <div className="aspect-square bg-gray-400 w-full rounded-md max-w-sm"></div>
+      <img
+        src={product?.productImageUrl}
+        alt="img"
+        className="aspect-square bg-gray-400 w-full rounded-md max-w-sm"
+      />
       <div className="w-full max-w-sm lg:max-w-md xl:max-w-xl">
-        <h2 className="text-3xl text-gray-500 lg:text-4xl">Product name.</h2>
-        <h3 className="text-xl lg:text-2xl text-gray-400 pb-4">$10</h3>
+        <h2 className="text-3xl text-gray-500 lg:text-4xl">
+          {product?.productName}
+        </h2>
+        <h3 className="text-xl lg:text-2xl text-gray-400 pb-4">
+          ${product?.productPrice.toString()}
+        </h3>
 
-        <p className="text-gray-500 pt-6">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error
-          dolorum dolorem a quod modi odit optio nostrum, veniam qui aliquam
-          numquam accusantium exercitationem reprehenderit explicabo vero nihil
-          consequatur harum totam. Lorem ipsum, dolor sit amet consectetur
-          adipisicing elit. Eaque esse architecto, officiis nesciunt odio
-          eligendi voluptatem tempora quae porro maxime vel repudiandae neque,
-          culpa, repellat natus veniam vero quisquam eveniet.
-        </p>
+        <p className="text-gray-500 pt-6">{product?.productDesc}</p>
 
         <div>
           <div className="flex justify-center w-fit items-center align-middle mt-8 mb-4">
@@ -42,3 +61,17 @@ const ProductViewPage = () => {
 };
 
 export default ProductViewPage;
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  interface customParsedUrlQuery extends ParsedUrlQuery {
+    id: string;
+  }
+
+  const { id } = params as customParsedUrlQuery;
+  const documentRef = doc(db, "Products", id);
+  const product = (await (await getDoc(documentRef)).data()) as prodInterface;
+  // console.log(product);
+  return {
+    props: { product },
+  };
+};

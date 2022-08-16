@@ -1,9 +1,24 @@
 import Card from "../../components/Card";
 import ProdForm from "../../components/ProdForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ProductInterface } from "../../interfaces";
 
 const AdminPage = () => {
   const [isFormOpen, setOpenStatus] = useState<boolean>(false);
+  const [products, setProducts] = useState([] as ProductInterface[]);
+
+  useEffect(() => {
+    makeRequestForProducts();
+    // console.log(products);
+  }, []);
+
+  const makeRequestForProducts = async () => {
+    const data = await fetch("/api/getProd");
+    const json = (await data.json()) as ProductInterface[];
+    console.log(json);
+    setProducts(json);
+    console.log(products);
+  };
 
   return (
     <div className="divide-y divide-gray-400 px-1 sm:px-4">
@@ -33,9 +48,20 @@ const AdminPage = () => {
         </div>
 
         <div className="flex justify-center align-middle items-center flex-wrap md:px-6">
-          <Card adminCard={true} />
-          <Card adminCard={true} />
-          <Card adminCard={true} />
+          {products.length ? (
+            products.map((prod) => (
+              <Card
+                adminCard={true}
+                key={prod.productID}
+                productImageUrl={prod.productImageUrl}
+                productName={prod.productName}
+                productPrice={prod.productPrice.toString()}
+                id={prod.productID}
+              />
+            ))
+          ) : (
+            <h2>nothing to show</h2>
+          )}
         </div>
       </div>
     </div>
