@@ -2,8 +2,11 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Card from "../components/Card";
 import Link from "next/link";
+import { db } from "../firebase/lib";
+import { collection, getDocs } from "firebase/firestore";
+import { ProductInterface } from "../interfaces";
 
-const Home: NextPage = () => {
+const Home: NextPage<{ products: ProductInterface[] }> = ({ products }) => {
   return (
     <div>
       <Head>
@@ -21,9 +24,20 @@ const Home: NextPage = () => {
           </Link>
         </div>
         <div className="flex justify-center align-middle items-center flex-wrap mt-8">
-          <Card adminCard={false} />
-          <Card adminCard={false} />
-          <Card adminCard={false} />
+          {products.length ? (
+            products.map((prod) => (
+              <Card
+                key={prod?.productID}
+                productName={prod?.productName}
+                productPrice={prod?.productPrice.toString()}
+                productImageUrl={prod?.productImageUrl}
+                id={prod?.productID}
+                adminCard={false}
+              />
+            ))
+          ) : (
+            <h2>Nothing to show</h2>
+          )}
         </div>
       </main>
     </div>
@@ -31,3 +45,23 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = async () => {
+  const collectionRef = collection(db, "Products");
+  const data = await getDocs(collectionRef);
+
+  let products: ProductInterface[] = [];
+
+  data.forEach((prod) => {
+    const product = {
+      productID: prod.id,
+      ...prod.data(),
+    } as unknown as ProductInterface;
+
+    products.push(product);
+  });
+
+  return {
+    props: { products },
+  };
+};

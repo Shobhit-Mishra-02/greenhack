@@ -5,6 +5,7 @@ import { useState } from "react";
 import { auth } from "../../firebase/lib";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useRouter } from "next/router";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -13,6 +14,7 @@ const SignInPage: NextPage = () => {
     email: "",
     password: "",
   });
+  const router = useRouter();
 
   const authenticateUser = () => {
     if (userInfo.email.length && userInfo.password.length) {
@@ -20,6 +22,7 @@ const SignInPage: NextPage = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
+          router.push("/");
         })
         .catch((error) => {
           const errorMessage = error.message;
@@ -33,6 +36,7 @@ const SignInPage: NextPage = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        router.push("/");
       })
       .catch((error) => {
         const errorMessage = error.message;

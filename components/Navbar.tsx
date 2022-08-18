@@ -39,9 +39,17 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
 
-          <li className="px-1" onClick={() => setCartStatus(true)}>
-            Cart
-          </li>
+          {isUser ? (
+            <li className="px-1" onClick={() => setCartStatus(true)}>
+              Cart
+            </li>
+          ) : (
+            <div className="px-1">
+              <Link href={"/auth/signin"}>
+                <a>Cart</a>
+              </Link>
+            </div>
+          )}
           {isUser && (
             <li className="px-1" onClick={() => setOrderStatus(true)}>
               Order
@@ -72,10 +80,18 @@ const Navbar: React.FC = () => {
           </Link>
 
           <div className="flex justify-center align-middle items-center space-x-6 md:space-x-6">
-            <AiOutlineShoppingCart
-              className="w-8 h-8 hover:text-gray-700 cursor-pointer"
-              onClick={() => setCartStatus(true)}
-            />
+            {isUser ? (
+              <AiOutlineShoppingCart
+                className="w-8 h-8 hover:text-gray-700 cursor-pointer"
+                onClick={() => setCartStatus(true)}
+              />
+            ) : (
+              <Link href={"/auth/signin"}>
+                <a>
+                  <AiOutlineShoppingCart className="w-8 h-8 hover:text-gray-700 cursor-pointer" />
+                </a>
+              </Link>
+            )}
 
             {isUser && (
               <button
