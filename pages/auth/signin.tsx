@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
 import { auth } from "../../firebase/lib";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, updateProfile, User } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/router";
 

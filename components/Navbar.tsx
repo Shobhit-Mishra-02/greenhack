@@ -6,11 +6,13 @@ import { FiMenu, FiX } from "react-icons/fi";
 import Cart from "./Cart";
 import useAuth from "./hooks/authHook";
 import Order from "./Order";
+import Profile from "./Profile";
 
 const Navbar: React.FC = () => {
   const [isOpen, setOpenStatus] = useState<boolean>(false);
   const [isCart, setCartStatus] = useState<boolean>(false);
   const [isOrder, setOrderStatus] = useState<boolean>(false);
+  const [isProfile, setProfileStatus] = useState<boolean>(false);
   const { isUser, userInfo, logout } = useAuth();
 
   return (
@@ -53,6 +55,12 @@ const Navbar: React.FC = () => {
           {isUser && (
             <li className="px-1" onClick={() => setOrderStatus(true)}>
               Order
+            </li>
+          )}
+
+          {isUser && (
+            <li className="px-1" onClick={() => setProfileStatus(true)}>
+              Profile
             </li>
           )}
 
@@ -116,6 +124,22 @@ const Navbar: React.FC = () => {
                 </a>
               </Link>
             )}
+
+            {isUser &&
+              (userInfo.photoURL ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  className="w-12 h-12 rounded-full cursor-pointer"
+                  src={userInfo.photoURL as string}
+                  alt="img"
+                  onClick={() => setProfileStatus(true)}
+                />
+              ) : (
+                <div
+                  onClick={() => setProfileStatus(true)}
+                  className="w-12 h-12 rounded-full bg-gray-400 cursor-pointer"
+                ></div>
+              ))}
           </div>
         </div>
       </div>
@@ -123,6 +147,7 @@ const Navbar: React.FC = () => {
       {/* cart component */}
       {isCart && <Cart setCartStatus={setCartStatus} />}
       {isOrder && <Order setOrderStatus={setOrderStatus} />}
+      {isProfile && <Profile setProfileStatus={setProfileStatus} />}
     </>
   );
 };
