@@ -17,37 +17,32 @@ const Home: NextPage<{ products: ProductInterface[] }> = ({ products }) => {
       </Head>
 
       <main className="pt-4">
-        {/* <div className="flex justify-center items-center">
-          <Link href={"/leaderboard"}>
-            <a className="text-xl text-green-500 underline hover:text-green-600">
-              Checkout leaderboard
-            </a>
-          </Link>
-        </div> */}
-
-        <div className="sm:flex sm:flex-wrap md:justify-evenly md:align-middle md:items-center">
-          <div className="w-full sm:max-w-sm sm:mx-auto md:mx-0 lg:max-w-md">
-            <img className="aspect-square" src="/hero.svg" alt="img" />
-          </div>
-          <div className="sm:max-w-sm sm:mx-auto md:mx-0 md:w-fit">
-            <h2 className="text-4xl font-bold text-gray-600 pb-6 text-center md:text-left">
-              Welcome to Green Commerce
+        <div className="flex flex-wrap-reverse justify-center align-middle items-center pt-14 pb-12 md:pt-20 md:pb-24 xl:pt-24 md:justify-evenly">
+          <div className="sm:max-w-sm xl:max-w-md">
+            <h2 className="text-4xl font-bold text-gray-700 pb-6 text-center md:text-left lg:text-5xl xl:pb-8">
+              Welcome to the Green commerce
             </h2>
-            <p className="text-gray-500 pb-4 text-center md:text-left">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad
-              maiores animi hic deleniti iure expedita ex voluptatum laudantium
-              perspiciatis officia sed blanditiis, consequuntur doloribus saepe
-              harum? Quos similique ipsa eos.
+            <p className="text-center text-gray-500 md:text-left text-sm">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+              excepturi quisquam maiores in assumenda, sunt ratione cumque
+              ducimus ipsa, omnis praesentium dolorum tempora temporibus eaque
+              repellendus, placeat aliquid? In, molestiae?
             </p>
 
-            <div className="flex justify-center md:justify-start">
-              <button className="px-4 py-1 rounded-md text-white bg-green-500 hover:bg-green-600 text-xl">
-                Leaderboard
-              </button>
+            <div className="flex justify-center pt-4 md:justify-start xl:pt-6">
+              <Link href={"/leaderboard"}>
+                <a className="text-xl text-white px-4 py-1 rounded-md bg-green-500 hover:bg-green-600">
+                  Leaderboard
+                </a>
+              </Link>
             </div>
           </div>
+          <div className="w-full sm:max-w-sm md:max-w-md xl:max-w-xl">
+            <img className="w-full aspect-square" src="/hero.svg" alt="img" />
+          </div>
         </div>
-        <div className="flex justify-center align-middle items-center flex-wrap mt-8">
+
+        <div className="flex justify-center align-middle items-center flex-wrap mt-8 md:px-8 xl:px-28 xl:space-x-6 pb-10">
           {products.length ? (
             products.map((prod) => (
               <Card
