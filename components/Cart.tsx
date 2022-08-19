@@ -13,6 +13,10 @@ import {
   deleteDoc,
   writeBatch,
   addDoc,
+  getDoc,
+  updateDoc,
+  increment,
+  setDoc,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
@@ -44,6 +48,21 @@ const Cart: React.FC<{
     return 0;
   };
 
+  const addToLeaderboard = async (email: string, amount: number) => {
+    const leaderboardDocRef = doc(db, "Leaderboard", email);
+    const temp = await getDoc(leaderboardDocRef);
+
+    if (temp.exists()) {
+      await updateDoc(leaderboardDocRef, {
+        totalAmount: increment(amount),
+      });
+    } else {
+      await setDoc(leaderboardDocRef, {
+        totalAmount: amount,
+      });
+    }
+  };
+
   const getCartInfo = async () => {
     if (isUser) {
       const collectionRef = collection(db, "Cart");
@@ -58,8 +77,6 @@ const Cart: React.FC<{
         } as CartInterface;
 
         temp.push(product);
-
-        // setGrandTotal(grandTotal + product.totalPrice);
       });
 
       setCartProducts(temp);
@@ -88,6 +105,8 @@ const Cart: React.FC<{
       const orderCollectionRef = collection(db, "Order");
       const dataRef = await addDoc(orderCollectionRef, orderObject);
       console.log(dataRef);
+
+      addToLeaderboard(userInfo.email as string, getGrandTotal());
 
       cartProducts.forEach((prod) => {
         removeCartProduct(prod.id);

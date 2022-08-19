@@ -1,4 +1,17 @@
-const LeaderBoard = () => {
+import { db } from "../../firebase/lib";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { NextPage } from "next";
+
+interface LeaderboardInterface {
+  id: string;
+  totalAmount: number;
+}
+
+const LeaderBoard: NextPage<{ users: LeaderboardInterface[] }> = ({
+  users,
+}) => {
+  // console.log(users);
+
   return (
     <div className="md:px-20 mt-12 ">
       <h2 className="text-4xl text-center py-4 pb-8">Leader Board</h2>
@@ -56,3 +69,22 @@ const LeaderBoard = () => {
 };
 
 export default LeaderBoard;
+
+export const getServerSideProps = async () => {
+  const collectionRef = collection(db, "Leaderboard");
+  const queryForLeaderboard = query(collectionRef, orderBy("totalAmount"));
+  const leaderboardData = await getDocs(queryForLeaderboard);
+
+  let users: LeaderboardInterface[] = [];
+
+  leaderboardData.forEach((data) => {
+    users.push({
+      id: data.id,
+      ...data.data(),
+    } as LeaderboardInterface);
+  });
+
+  return {
+    props: { users },
+  };
+};

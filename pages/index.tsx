@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { NextPage } from "next";
 import Head from "next/head";
 import Card from "../components/Card";
@@ -16,12 +17,35 @@ const Home: NextPage<{ products: ProductInterface[] }> = ({ products }) => {
       </Head>
 
       <main className="pt-4">
-        <div className="flex justify-center items-center">
+        {/* <div className="flex justify-center items-center">
           <Link href={"/leaderboard"}>
             <a className="text-xl text-green-500 underline hover:text-green-600">
               Checkout leaderboard
             </a>
           </Link>
+        </div> */}
+
+        <div className="sm:flex sm:flex-wrap md:justify-evenly md:align-middle md:items-center">
+          <div className="w-full sm:max-w-sm sm:mx-auto md:mx-0 lg:max-w-md">
+            <img className="aspect-square" src="/hero.svg" alt="img" />
+          </div>
+          <div className="sm:max-w-sm sm:mx-auto md:mx-0 md:w-fit">
+            <h2 className="text-4xl font-bold text-gray-600 pb-6 text-center md:text-left">
+              Welcome to Green Commerce
+            </h2>
+            <p className="text-gray-500 pb-4 text-center md:text-left">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad
+              maiores animi hic deleniti iure expedita ex voluptatum laudantium
+              perspiciatis officia sed blanditiis, consequuntur doloribus saepe
+              harum? Quos similique ipsa eos.
+            </p>
+
+            <div className="flex justify-center md:justify-start">
+              <button className="px-4 py-1 rounded-md text-white bg-green-500 hover:bg-green-600 text-xl">
+                Leaderboard
+              </button>
+            </div>
+          </div>
         </div>
         <div className="flex justify-center align-middle items-center flex-wrap mt-8">
           {products.length ? (
