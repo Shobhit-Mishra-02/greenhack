@@ -52,14 +52,17 @@ const Cart: React.FC<{
     const leaderboardDocRef = doc(db, "Leaderboard", email);
     const temp = await getDoc(leaderboardDocRef);
 
-    if (temp.exists()) {
-      await updateDoc(leaderboardDocRef, {
-        totalAmount: increment(amount),
-      });
-    } else {
-      await setDoc(leaderboardDocRef, {
-        totalAmount: amount,
-      });
+    if (userInfo.displayName) {
+      if (temp.exists()) {
+        await updateDoc(leaderboardDocRef, {
+          totalAmount: increment(amount),
+        });
+      } else {
+        await setDoc(leaderboardDocRef, {
+          totalAmount: amount,
+          name: userInfo.displayName,
+        });
+      }
     }
   };
 

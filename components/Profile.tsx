@@ -56,10 +56,7 @@ const Profile: React.FC<{
   const onSubmit = () => {
     console.log("running function");
     if (isUser) {
-      // if the image url is changed then update the new selected image.
-      // then check if the name is changed then update the name also
-
-      if (profile.imageUrl != userInfo.photoURL) {
+      if (profile.imageUrl.length && profile.files.length) {
         console.log("start upload");
         const storageRef = ref(storage, `profile/${profile.imageName}`);
         const uploadTask = uploadBytesResumable(storageRef, profile.files[0]);
@@ -95,6 +92,7 @@ const Profile: React.FC<{
       }
 
       if (profile.name != userInfo.displayName) {
+        console.log("updating user name");
         updateProfile(auth.currentUser as User, {
           displayName: profile.name,
         });

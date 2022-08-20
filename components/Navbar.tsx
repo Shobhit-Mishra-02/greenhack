@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Link from "next/link";
 import { useState } from "react";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
 import { FiMenu, FiX } from "react-icons/fi";
 import Cart from "./Cart";
 import useAuth from "./hooks/authHook";
@@ -135,10 +135,18 @@ const Navbar: React.FC = () => {
                   onClick={() => setProfileStatus(true)}
                 />
               ) : (
-                <div
-                  onClick={() => setProfileStatus(true)}
-                  className="w-12 h-12 rounded-full bg-gray-400 cursor-pointer"
-                ></div>
+                <div className="relative">
+                  <div
+                    onClick={() => setProfileStatus(true)}
+                    className="w-12 h-12 rounded-full bg-gray-400 cursor-pointer flex justify-center align-middle items-center"
+                  >
+                    <AiOutlineUser className="w-8 h-8 text-gray-500" />
+                  </div>
+
+                  {!userInfo.displayName && (
+                    <div className="w-3 h-3 rounded-full bg-red-600 absolute top-0 right-0 animate-pulse"></div>
+                  )}
+                </div>
               ))}
           </div>
         </div>
