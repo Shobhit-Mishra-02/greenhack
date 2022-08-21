@@ -8,12 +8,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD09wxMJJ6HMQI5_9ZBe4a7SLOL_39b92c",
-  authDomain: "greencommerce-95948.firebaseapp.com",
-  projectId: "greencommerce-95948",
-  storageBucket: "greencommerce-95948.appspot.com",
-  messagingSenderId: "585380526147",
-  appId: "1:585380526147:web:eddbd5786ccbd5256c3cf6",
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 // Initialize Firebase

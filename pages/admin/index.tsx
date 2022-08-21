@@ -6,6 +6,7 @@ import useAuth from "../../components/hooks/authHook";
 import { useRouter } from "next/router";
 import { db } from "../../firebase/lib";
 import { doc, getDoc } from "firebase/firestore";
+import { AiOutlineReload } from "react-icons/ai";
 
 const AdminPage = () => {
   const [isFormOpen, setOpenStatus] = useState<boolean>(false);
@@ -93,7 +94,9 @@ const AdminPage = () => {
           </div>
         </>
       ) : (
-        <div>checking are you admin!</div>
+        <div className="w-full h-screen flex justify-center align-middle items-center">
+          <AiOutlineReload className="w-8 h-8 text-green-500 animate-spin" />
+        </div>
       )}
     </div>
   );

@@ -1,11 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import {
+  AiOutlinePlus,
+  AiOutlineMinus,
+  AiTwotoneRightSquare,
+} from "react-icons/ai";
 import { db } from "../../firebase/lib";
 import { getDoc, doc, addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import useAuth from "../../components/hooks/authHook";
+import { ToastContainer, toast } from "react-toastify";
+import Notification from "../../utils/notification";
 
 interface prodInterface {
   productName: string;
@@ -43,6 +49,10 @@ const ProductViewPage = ({
       const collectionRef = collection(db, "Cart");
       const dataRef = await addDoc(collectionRef, cartProductInfo);
       console.log(dataRef.id);
+
+      Notification("success", "Successfully added to your cart.");
+    } else {
+      Notification("error", "Login first!!");
     }
   };
 
@@ -94,13 +104,23 @@ const ProductViewPage = ({
 
           <button
             className="text-xl text-green-500 border border-green-500 rounded-md px-4 py-1 hover:bg-green-500 hover:text-white mr-4"
-            onClick={addToCard}
+            onClick={() => {
+              addToCard();
+            }}
           >
             Add to cart
           </button>
-          <button className="text-xl text-white bg-green-500 rounded-md px-6 py-1 hover:bg-green-600 mt-2">
-            Buy now
-          </button>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </div>
       </div>
     </div>

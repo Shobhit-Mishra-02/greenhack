@@ -109,45 +109,10 @@ const Order: NextPage<{
                 </div>
               ))
             ) : (
-              <div>nothing to show</div>
+              <div className="w-full h-full flex justify-center text-4xl font-semibold text-gray-400">
+                Buy something!!
+              </div>
             )}
-
-            {/* card  */}
-            {/* <div className="w-full px-1 pb-2 pt-1">
-              <div className="flex justify-between items-center align-middle">
-                <h2 className="text-2xl text-gray-700">Product title</h2>
-                <h2 className="text-gray-500 pt-2 text-xl">$10</h2>
-              </div>
-
-              
-              <div className="flex justify-between align-middle pt-4 pb-4">
-                <h2 className="text-xl text-gray-500">Grand total</h2>
-                <h2 className="text-xl text-gray-500">30</h2>
-              </div>
-
-              <div className="flex justify-end">
-                <button className="text-xl text-red-500 border border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white">
-                  Cancel order
-                </button>
-              </div>
-            </div> */}
-
-            {/* card end  */}
-            {/* <div className="w-full px-1 pb-2 pt-1">
-              <div className="flex justify-between items-center align-middle">
-                <h2 className="text-2xl text-gray-700">Product title</h2>
-                <h2 className="text-gray-500 pt-2 text-xl">$10</h2>
-              </div>
-
-              <h2 className="text-gray-500 text-xl pb-4">Qnt: 3</h2>
-              <h2 className="text-gray-500 text-xl pb-4">Total amount: 30</h2>
-
-              <div className="flex justify-end">
-                <button className="text-xl text-red-500 border border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white">
-                  Cancel order
-                </button>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

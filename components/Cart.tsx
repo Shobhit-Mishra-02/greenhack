@@ -19,6 +19,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import { AiOutlineReload } from "react-icons/ai";
 
 interface CartInterface {
   email: string;
@@ -32,8 +33,8 @@ const Cart: React.FC<{
   setCartStatus: Dispatch<SetStateAction<boolean>>;
 }> = ({ setCartStatus }) => {
   const [cartProducts, setCartProducts] = useState([] as CartInterface[]);
-  // const [grandTotal, setGrandTotal] = useState(0);
   const { isUser, userInfo } = useAuth();
+  const [isMakingOrder, setMakingOrderStatus] = useState(false);
 
   const getGrandTotal = (): number => {
     if (cartProducts.length) {
@@ -90,6 +91,7 @@ const Cart: React.FC<{
 
   const placeOrder = async () => {
     if (isUser && cartProducts.length) {
+      setMakingOrderStatus(true);
       let prods: { productName: string; totalPrice: number }[] = [];
 
       cartProducts.forEach((prod) => {
@@ -114,6 +116,8 @@ const Cart: React.FC<{
       cartProducts.forEach((prod) => {
         removeCartProduct(prod.id);
       });
+
+      setMakingOrderStatus(false);
     }
   };
 
@@ -134,7 +138,7 @@ const Cart: React.FC<{
     <div className="fixed top-0 bottom-0 w-full z-10">
       <div className="w-full h-full bg-gray-500 opacity-30 absolute -z-10"></div>
       <div className="flex justify-center align-middle items-center h-screen">
-        <div className="w-fit bg-white rounded-md shadow-lg border">
+        <div className="relative w-fit bg-white rounded-md shadow-lg border">
           <div className="flex justify-end pt-4 pb-6 px-4">
             <FiX
               className="w-6 h-6 text-gray-500 cursor-pointer"
@@ -169,18 +173,30 @@ const Cart: React.FC<{
                 </div>
               ))
             ) : (
-              <div>nothing to show.</div>
+              <div className="w-full h-full flex justify-center text-4xl font-semibold text-gray-400">
+                Do some shopping!!
+              </div>
             )}
           </div>
 
-          <div className="flex justify-center py-2">
-            <button
-              className="text-xl text-white bg-blue-500 px-4 py-1 rounded-md hover:bg-blue-600"
-              onClick={placeOrder}
-            >
-              Place order
-            </button>
-          </div>
+          {cartProducts.length ? (
+            <div className="flex justify-center py-2">
+              <button
+                className="text-xl text-white bg-blue-500 px-4 py-1 rounded-md hover:bg-blue-600"
+                onClick={placeOrder}
+              >
+                Place order
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+
+          {isMakingOrder && (
+            <div className="absolute top-0 bottom-0 w-full flex justify-center align-middle items-center">
+              <AiOutlineReload className="w-8 h-8 text-green-500 animate-spin" />
+            </div>
+          )}
         </div>
       </div>
     </div>
