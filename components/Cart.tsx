@@ -173,7 +173,7 @@ const Cart: React.FC<{
                 </div>
               ))
             ) : (
-              <div className="w-full h-full flex justify-center text-4xl font-semibold text-gray-400">
+              <div className="w-full h-full text-center text-4xl font-semibold text-gray-400">
                 Do some shopping!!
               </div>
             )}

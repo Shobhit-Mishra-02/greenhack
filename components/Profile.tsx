@@ -6,6 +6,9 @@ import useAuth from "../components/hooks/authHook";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage, auth } from "../firebase/lib";
 import { updateProfile, User } from "firebase/auth";
+import { AiOutlineReload } from "react-icons/ai";
+import { ToastContainer } from "react-toastify";
+import Notification from "../utils/notification";
 
 interface ProfileInterface {
   name: string;
@@ -25,6 +28,7 @@ const Profile: React.FC<{
     imageName: "",
     files: {} as FileList,
   } as ProfileInterface);
+  const [isUploading, setUploadingStatus] = useState(false);
 
   const { isUser, userInfo } = useAuth();
 
@@ -48,8 +52,6 @@ const Profile: React.FC<{
         imageName: files[0].name,
         files: files,
       });
-
-      // console.log(profile);
     }
   };
 
@@ -57,6 +59,7 @@ const Profile: React.FC<{
     console.log("running function");
     if (isUser) {
       if (profile.imageUrl.length && profile.files.length) {
+        setUploadingStatus(true);
         console.log("start upload");
         const storageRef = ref(storage, `profile/${profile.imageName}`);
         const uploadTask = uploadBytesResumable(storageRef, profile.files[0]);
@@ -85,6 +88,7 @@ const Profile: React.FC<{
                 photoURL: downloadURL,
               }).then(() => {
                 console.log(downloadURL);
+                setUploadingStatus(false);
               });
             });
           }
@@ -92,10 +96,12 @@ const Profile: React.FC<{
       }
 
       if (profile.name != userInfo.displayName) {
+        setUploadingStatus(true);
         console.log("updating user name");
         updateProfile(auth.currentUser as User, {
           displayName: profile.name,
         });
+        setUploadingStatus(false);
       }
     }
   };
@@ -114,8 +120,13 @@ const Profile: React.FC<{
             e.preventDefault();
             onSubmit();
           }}
-          className="w-fit bg-white rounded-md shadow-lg border"
+          className="relative w-fit bg-white rounded-md shadow-lg border"
         >
+          {isUploading && (
+            <div className="absolute top-0 bottom-0 w-full flex justify-center align-middle items-center">
+              <AiOutlineReload className="w-8 h-8 text-green-500 animate-spin" />
+            </div>
+          )}
           <div className="flex justify-end pt-4 pb-6 px-4">
             <FiX
               className="w-6 h-6 text-gray-500 cursor-pointer"
@@ -201,6 +212,18 @@ const Profile: React.FC<{
           </div>
         </form>
       </div>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

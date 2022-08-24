@@ -7,6 +7,9 @@ import { useState } from "react";
 import { storage, db } from "../firebase/lib";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
+import { AiOutlineReload } from "react-icons/ai";
+import Notification from "../utils/notification";
+import { ToastContainer } from "react-toastify";
 
 const ProdForm: NextPage<{
   setOpenStatus: Dispatch<SetStateAction<boolean>>;
@@ -19,6 +22,7 @@ const ProdForm: NextPage<{
     productDesc: "",
     productImageUrl: "",
   });
+  const [isUploading, setUploadingState] = useState(false);
 
   const onSubmit = () => {
     // console.log(product);
@@ -29,6 +33,7 @@ const ProdForm: NextPage<{
       product.productName.length &&
       product.productImageUrl.length
     ) {
+      setUploadingState(true);
       const storageRef = ref(storage, `images/${product.productImage}`);
       const uploadTask = uploadBytesResumable(
         storageRef,
@@ -49,6 +54,7 @@ const ProdForm: NextPage<{
         },
         (error) => {
           console.log(error.message);
+          Notification("error", "Some problem in uploading image.");
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -62,6 +68,7 @@ const ProdForm: NextPage<{
 
             console.log("document written Id", prodDoc.id);
 
+            setUploadingState(false);
             setProduct({
               ...product,
               productDesc: "",
@@ -71,11 +78,13 @@ const ProdForm: NextPage<{
               productPrice: "",
               productImage: "",
             });
+            Notification("success", "New product has been added.");
           });
         }
       );
     } else {
       console.log("fill all the fields");
+      Notification("error", "Fill all the fields!!");
     }
   };
 
@@ -100,8 +109,13 @@ const ProdForm: NextPage<{
             e.preventDefault();
             onSubmit();
           }}
-          className="w-fit bg-white rounded-md shadow-lg border"
+          className="relative w-fit bg-white rounded-md shadow-lg border"
         >
+          {isUploading && (
+            <div className="absolute top-0 bottom-0 w-full flex justify-center align-middle items-center">
+              <AiOutlineReload className="w-8 h-8 text-green-500 animate-spin" />
+            </div>
+          )}
           <div className="flex justify-end pt-4 pb-6 px-4">
             <FiX
               className="w-6 h-6 text-gray-500 cursor-pointer"
@@ -197,6 +211,17 @@ const ProdForm: NextPage<{
           </div>
         </form>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

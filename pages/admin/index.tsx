@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Card from "../../components/Card";
 import ProdForm from "../../components/ProdForm";
 import { useState, useEffect } from "react";
@@ -5,8 +6,9 @@ import { ProductInterface } from "../../interfaces";
 import useAuth from "../../components/hooks/authHook";
 import { useRouter } from "next/router";
 import { db } from "../../firebase/lib";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { AiOutlineReload } from "react-icons/ai";
+import Link from "next/link";
 
 const AdminPage = () => {
   const [isFormOpen, setOpenStatus] = useState<boolean>(false);
@@ -36,7 +38,7 @@ const AdminPage = () => {
 
     // console.log(products);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUser, isAdmin]);
+  }, [isUser, isAdmin, isFormOpen]);
 
   const makeRequestForProducts = async () => {
     const data = await fetch("/api/getProd");
@@ -44,6 +46,12 @@ const AdminPage = () => {
     console.log(json);
     setProducts(json);
     console.log(products);
+  };
+
+  const removeProduct = async (id: string) => {
+    const docRef = doc(db, "Products", id);
+    await deleteDoc(docRef);
+    makeRequestForProducts();
   };
 
   return (
@@ -66,29 +74,49 @@ const AdminPage = () => {
             </div>
           </div>
 
-          <div>
-            <div className="flex justify-center pt-8 pb-4 sm:pt-12 sm:pb-8">
-              <input
-                type="text"
-                placeholder="search..."
-                className="px-2 py-1 rounded-md border border-gray-400 w-[300px]"
-              />
-            </div>
-
+          <div className="pt-12 pb-12">
             <div className="flex justify-center align-middle items-center flex-wrap md:px-6">
               {products.length ? (
                 products.map((prod) => (
-                  <Card
-                    adminCard={true}
+                  <div
                     key={prod.productID}
-                    productImageUrl={prod.productImageUrl}
-                    productName={prod.productName}
-                    productPrice={prod.productPrice.toString()}
-                    id={prod.productID}
-                  />
+                    className="w-[300px] rounded-md shadow-xl m-2"
+                  >
+                    <img
+                      src={prod.productImageUrl}
+                      alt={"img"}
+                      className="w-full h-[300px] rounded-t-md bg-gray-400"
+                    />
+                    <div className="px-1 pb-2">
+                      <h2 className="text-3xl pt-2 text-gray-500 hover:text-gray-600 cursor-pointer">
+                        {prod.productName}
+                      </h2>
+                      <h3 className="text-xl text-gray-400 pb-4">
+                        ${prod.productPrice}
+                      </h3>
+
+                      <div className="flex justify-end space-x-2">
+                        <button
+                          onClick={() => removeProduct(prod.productID)}
+                          className="text-xl text-red-500 rounded-md px-4 py-1 hover:text-white hover:bg-red-500 border border-red-500"
+                        >
+                          Remove
+                        </button>
+                        <Link href={`/prodview/${prod.productID}`}>
+                          <a className="text-xl text-white bg-green-500 rounded-md px-4 py-1 hover:bg-green-600">
+                            Buy now
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 ))
               ) : (
-                <h2>nothing to show</h2>
+                <div className="w-full h-screen flex justify-center align-middle items-center">
+                  <h2 className="text-5xl font-semibold text-gray-400">
+                    Nothing to show
+                  </h2>
+                </div>
               )}
             </div>
           </div>
