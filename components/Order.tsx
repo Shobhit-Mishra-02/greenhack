@@ -11,6 +11,8 @@ import {
   where,
   doc,
   deleteDoc,
+  updateDoc,
+  increment,
 } from "firebase/firestore";
 
 interface OrderInterface {
@@ -42,14 +44,19 @@ const Order: NextPage<{
         } as OrderInterface);
       });
 
-      // console.log(temp);
       setOrderList(temp);
       console.log(orderList);
     }
   };
 
-  const removeOrder = async (id: string) => {
+  const removeOrder = async (id: string, email: string, grandTotal: number) => {
     const docRef = doc(db, "Order", id);
+    const leaderboardRef = doc(db, "Leaderboard", email);
+
+    await updateDoc(leaderboardRef, {
+      totalAmount: increment(-grandTotal),
+    });
+
     await deleteDoc(docRef);
 
     getOrders();
@@ -100,7 +107,9 @@ const Order: NextPage<{
 
                   <div className="flex justify-end">
                     <button
-                      onClick={() => removeOrder(order.id)}
+                      onClick={() =>
+                        removeOrder(order.id, order.email, order.grandTotal)
+                      }
                       className="text-xl text-red-500 border border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white"
                     >
                       Cancel order
